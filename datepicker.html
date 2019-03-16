@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="datepicker.js" type="text/javascript"></script>
+    <title>Datepicker</title>
+</head>
+<body>
+<form>
+    <div style="display: inline;">
+    <span id="day-of-week-tab" onclick="change(event)">Day of Week</span>
+    <span id="year-month-tab" onclick="change(event)">Year / Month</span>
+    <span id="user-input-tab" onclick="change(event)">User Input</span>
+    </div>
+<div id="day-of-week">
+    <input type="checkbox" value="Mon">Monday
+    <input type="checkbox" value="Tues">Tuesday
+    <input type="checkbox" value="Wed">Wednesday
+    <input type="checkbox" value="Thurs">Thursday
+    <input type="checkbox" value="Fri">Friday
+    <input type="checkbox" value="Sat">Saturday
+    <input type="checkbox" value="Sun">Sunday
+</div>
+<div id="year-month" style="display:none;">
+    <select id="day">
+    </select>
+    <select id="month" class="month">
+    </select>
+    <select id="year">
+    </select>
+</div>
+<div id="user-input-div" style="display:none;">
+    <input type="text" id="user-input">
+</div>
+<button id="submit" onsubmit="">Run</button>
+    <input type="text" id="result">
+</form>
+</body>
+</html>
