@@ -34,6 +34,22 @@ function add(arg) {
     }
 }
 
+function add4(arg){
+    let sum = arg;
+    return function x(arg1){
+        if(arg1){
+            sum += arg1;
+            return x;
+        }
+        else{
+            return sum;
+        }
+
+    }
+}
+
+console.log("add 4 " ,add4(1)(2)());
+
 function add3(arg) {
     return function (arg1) {
         return arg + arg1;
