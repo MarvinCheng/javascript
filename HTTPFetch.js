@@ -28,7 +28,6 @@ async function processResp() {
 
 //fetch image example
 let image = fetch('zippay.jpg');
-
 image.then(resp => resp.blob()).then(res => {
     const objectUrl = URL.createObjectURL(res);
     const image = document.querySelector('.image');
@@ -65,7 +64,7 @@ let promises = Promise.all([req, req2, errReq]).then(responses => {
     }));
 console.log(promises);
 
-// fetch response只能够用一次 (memory efficiency), 
+// fetch response只能够用一次 (memory efficiency),
 // 如果要再用同一个response的话, 可以把 response 存在cache里,或者clone response 去另外一个variable
 let clone;
 req3.then((response) => {
@@ -142,5 +141,19 @@ newFFetch.then(resp => {
     return null;
 }).then(json => {
     console.log("NewFFetch json");
+    console.log(json);
+});
+
+console.log('test fetch with failed response');
+
+let newfffetch = fetch(Promise.reject(123));
+newfffetch.then(response => {
+    console.log('newfffetch');
+    console.log(response);
+    if(response.ok){
+        return response.json();
+    }
+}).then(json=>{
+    console.log('newfffetch json');
     console.log(json);
 });

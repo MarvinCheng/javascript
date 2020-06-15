@@ -23,3 +23,6 @@ const anagrams = (str1, str2) => {
 
 console.log(anagrams("hello world", "world hello"));
 console.log(anagrams("you shall not pass", "world hello"));
+
+
+fetch('test.json').then(response => response.json());

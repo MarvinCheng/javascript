@@ -45,5 +45,41 @@ async function inner() {
 
     console.log("END");
 }
-inner();
+// inner();
 console.log("In global after async, a = ",a);
+
+
+async function reject(){
+    let a = 2;
+    // 如果没有用try catch的话， async function跑到promise4
+    // 就会停止
+    try{
+        a = await promise4;
+    }catch(err){
+        console.log(err);
+    }
+    console.log('rejected ', a);
+    let b = await promise3;
+    console.log('b after await ', b);
+}
+
+// reject();
+
+
+async function rejected(){
+    let a = 2;
+    try{
+        a = await promise4;
+    } catch(err){
+        console.log(err);
+    }
+    console.log('rejected ',a);
+}
+
+let b = rejected();
+setTimeout(()=>{
+    // b 是 rejected的promise
+    // 如果有用try catch来wrap rejected promise的话
+    // b是resolved的promise
+    console.log(b);
+},3000);

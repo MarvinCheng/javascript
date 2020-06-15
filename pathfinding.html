@@ -1,0 +1,164 @@
+<canvas id="canvas" width="500" height="500"></canvas>
+<script language="javascript">
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.translate(15, 15);
+    
+    class Map {
+        width = 15;
+        height = 15;
+        
+        constructor() {
+            // create the grid (2D array of Squares)
+            this.grid = [];
+            for(let x = 0; x < this.width; x++) {
+                const column = [];
+                for(let y = 0; y < this.height; y++) {
+                    const square = Math.random() > 0.3 ? Square : BlockedSquare;
+                    column.push(new square(x, y));
+                }
+                this.grid.push(column);
+            }
+            // create the person
+            let personX;
+            let personY;
+            do {
+                personX = Math.round(Math.random() * (this.width - 1));
+                personY = Math.round(Math.random() * (this.height - 1));
+            } while(this.grid[personX][personY].blocked);
+            this.person = new Person(personX, personY);
+            // create the target
+            let targetX;
+            let targetY;
+            do {
+                targetX = Math.round(Math.random() * (this.width - 1));
+                targetY = Math.round(Math.random() * (this.height - 1));
+            } while(this.grid[targetX][targetY].blocked || (targetX === personX && targetY === personY));
+            this.target = new Target(targetX, targetY);
+        }
+
+        render() {
+            this.grid.forEach((column) => {
+                column.forEach((square) => {
+                    square.render();
+                });
+            });
+            this.person.render();
+            this.target.render();
+        }
+
+        getPath() {
+            // THIS IS THE METHOD YOU MUST WRITE
+            // Hint: Look at the A* (A-star) algorithm
+            // Should return an array of 2 length arrays [x, y] if
+            // it is possible to get from the person to the target
+            // i.e. [[1,2], [1,3]]
+            // Otherwise return an empty array, []
+            // If a non-empty array is returned then the first element
+            // should be the coordinates of the person and the last
+            // element should be the coordinates of the target
+            // The list of positions should only differ by one position
+            // in the x and y directions, i.e. [[4, 5], [5, 5], [5, 6]]
+            // You cannot travel diagonally, i.e. [[4, 4], [5, 5]]
+            // Valid positions are rendered green (i.e. the square was not blocked)
+            // Invalid positions are rendered red (i.e. the square was blocked)
+            // Always keep the console open for errors
+            return []
+        }
+
+        showPath() {
+            const path = this.getPath();
+            if(path.length) {
+                let prev;
+                path.forEach((position, i) => {
+                    const x = position[0];
+                    const y = position[1];
+                    if(i === 0) {
+                        if(x !== this.person.x || y !== this.person.y) {
+                            console.error('First position should be the person')
+                        }
+                    }
+                    if(i === path.length - 1) {
+                        if(x !== this.person.x || y !== this.person.y) {
+                            console.error('Last position should be the target')
+                        }
+                    }
+                    if(prev) {
+                        if(Math.abs(prev[0] - x) + Math.abs(prev[1] - y) !== 1) {
+                            console.error('Can only move one square at a time either in x or y direction');
+                        }
+                    }
+                    this.grid[x][y].isPath = true;
+                    prev = position;
+                });
+            } else {
+                console.log('No solution!');
+            }
+            this.render();
+        }
+    }
+
+    class Person {
+        size = 8;
+
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        render() {
+            ctx.beginPath();
+            ctx.arc(this.x * Square.size, this.y * Square.size, this.size, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+    }
+
+    class Target {
+        size = 8;
+
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        render() {
+            ctx.beginPath();
+            ctx.moveTo(this.x * Square.size - this.size, this.y * Square.size - this.size);
+            ctx.lineTo(this.x * Square.size + this.size, this.y * Square.size + this.size);
+            ctx.moveTo(this.x * Square.size + this.size, this.y * Square.size - this.size);
+            ctx.lineTo(this.x * Square.size - this.size, this.y * Square.size + this.size);
+            ctx.stroke();
+        }
+    }
+
+    class Square {
+        static size = 25;
+        blocked = false;
+        isPath = false;
+        
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        render() {
+            ctx.beginPath();
+            let type = this.blocked ? 'fill' : 'stroke';
+            ctx.strokeStyle = 'rgb(0, 0, 0)';
+            ctx.fillStyle = 'rgb(0, 0, 0)';
+            if(this.isPath) {
+                type = 'fill';
+                ctx.fillStyle = this.blocked ? 'rgb(200, 0, 0)' : 'rgb(0, 200, 0)';
+            }
+            ctx.rect(this.x * Square.size - Square.size/2, this.y * Square.size - Square.size/2, Square.size, Square.size);
+            ctx[type]();
+        }
+    }
+
+    class BlockedSquare extends Square {
+        blocked = true;
+    }
+
+    const map = new Map();
+    map.showPath();
+</script>

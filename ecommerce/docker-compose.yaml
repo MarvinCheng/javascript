@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  web:
+    container_name: ecommerce
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/ecommerce'
+      - '/ecommerce/node_modules'
+    ports:
+      - 8080:8080
+    environment:
+      - CHOKIDAR_USEPOLLING=true

@@ -23,8 +23,9 @@ function add(arg) {
     console.log("Add start");
     let sum = arg;
     return function x(arg1) {
+        console.log('arg1', arg1);
         console.log("X in add start");
-        if (typeof arg1 === "undefined" && arg1 == null) {
+        if (arg1 === undefined) {
             return sum;
         } else {
             sum += arg1;
@@ -56,7 +57,7 @@ function add3(arg) {
     }
 }
 
-console.log(`add3 ${add3(1)(2)}`);
+// console.log(`add3 ${add3(1)(2)}`);
 console.log(`add2 ${add(2)(3)(4)(10)()}`);
 console.log(`add22 ${add(2)(3)(4)()}`);
 
@@ -66,25 +67,25 @@ let o = 10;
 let p = o;
 o = 5;
 console.log(o, p);
-
-console.log([10] === [10]);
-console.log(10 === 10);
-console.log("A" === "A");
-
-function aprototype() {
-    this.a = "A";
-}
-
-aprototype.prototype.add = function () {
-    return this.a;
-}
-let aproInst = new aprototype();
-console.log(aproInst.add());
-let aobj = {"a": 1};
-let bobj = aobj;
-let cobj = Object.create(aobj);
-console.log(cobj.a);
-console.log(cobj);
-aobj["b"] = 2;
-console.log(aobj === bobj);
-console.log(aobj, bobj);
+//
+// console.log([10] === [10]);
+// console.log(10 === 10);
+// console.log("A" === "A");
+//
+// function aprototype() {
+//     this.a = "A";
+// }
+//
+// aprototype.prototype.add = function () {
+//     return this.a;
+// }
+// let aproInst = new aprototype();
+// console.log(aproInst.add());
+// let aobj = {"a": 1};
+// let bobj = aobj;
+// let cobj = Object.create(aobj);
+// console.log(cobj.a);
+// console.log(cobj);
+// aobj["b"] = 2;
+// console.log(aobj === bobj);
+// console.log(aobj, bobj);

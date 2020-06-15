@@ -8,3 +8,5 @@ console.log(x(2)(3));
 console.log(x(2)());
 console.log(x(2)(4));
 console.log(x2(2)(3));
+
+

@@ -1,0 +1,7 @@
+{
+  "dimension": 5000,
+  "initialPosition": [3,2],
+  "creaturePositions": [[0,1],[1,2],[3,1]],
+  "moves": "DLUURR"
+}
+

@@ -7,35 +7,36 @@ var promise3 = new Promise(function (resolve, reject) {
 var promise5 = Promise.reject("Error");
 
 var promise6 = new Promise((resolve, reject) => {
-    resolve("123");
+    reject("123");
 });
-promise6.then((onfulfilled) => console.log(onfulfilled),
-    (onRejected) => console.log(onRejected));
+promise6.then((onfulfilled) => console.log(`promise 6 onfulfilled: ${onfulfilled}`),
+    (onRejected) => console.log(`promise 6 onRejected: ${onRejected}`)).catch(err=>{
+        console.log('promise 6 err', err);
+});
 
 Promise.all([promise1, promise2, promise3, promise4]).then(
     (values) => values.reduce((l, i, index, array) => {
         l = l + i;
         if (index == array.length - 1) {
-            console.log(l);
+            console.log(`promise all of promise 1,2,3,4 is ${l}`);
         }
         return l;
     }),
     (err) => console.log(err));
-// expected output: Array [3, 42, "foo"]
 
 Promise.race([promise1, promise2, promise3, promise4]).then(
-    (resp) => console.log(resp),
+    (resp) => console.log(`response of promise race is ${resp}`),
     (err) => console.log(err)
 );
 
 
 // catch is the same with calling Promise.prototype.then(undefined, onRejected).
 // (in fact, calling obj.catch(onRejected) internally calls obj.then(undefined, onRejected))
-promise5.catch((err) => console.log(err)).finally(() => console.log("finally"));
+promise5.catch((err) => console.log(`Promise 5 catch error: ${err}`)).finally(() => console.log("promise 5 catch: finally"));
 
 //promise all return 的response会照着promise的顺序来return
 Promise.all([promise1, promise2, promise3, promise4]).then(
-    (values) => values.forEach((i) => console.log(i)),
+    (values) => values.forEach((i) => console.log(`promise all of promise 1,2,3,4 return value: ${i}`)),
     (err) => console.log(err));
 
 //如果promise有一个reject的话就会return error
@@ -47,7 +48,7 @@ Promise.all([promise1, promise2, promise3, promise4, promise5]).then(
         }
         return l;
     }),
-    (err) => console.log(err));
+    (err) => console.log(`Promise all of 1,2,3,4,5 return error: ${err}`));
 
 
 
@@ -66,3 +67,48 @@ p2.then(function (value) {
 p2.then(function (value) {
     console.log("value in p2 ", value); // 1
 });
+
+
+let v  = new Promise((resolve, reject) => {
+    reject(1);
+});
+
+v.then(val =>{
+    console.log(val);
+}).catch(err => {
+    console.log('v err', err);
+});
+
+
+window.onload = function(){
+
+    let pp = new Promise((resolve, reject) => {
+        // let http = new XMLHttpRequest();
+        // http.open("GET", 'test2.json');
+        // http.send();
+        // http.onload = function(){
+        //     if(http.status==200){
+        //         resolve(http.response);
+        //     }else{
+        //         reject(http.statusText);
+        //     }
+        // };
+        fetch('test2.json').then(resp=>{
+            if(resp.ok){
+                resolve(resp.json());
+            } else{
+                reject(resp.statusText);
+            }
+
+        });
+    });
+
+    pp.then(resp=> {
+        console.log(resp);
+    }).catch(err=>{
+        console.error(err);
+    });
+
+
+};
+

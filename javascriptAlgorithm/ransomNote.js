@@ -22,15 +22,16 @@ const ransomNote = (words, magazine) => {
     return result;
 }
 
+// 把magazine的字放进一个object, key = char, value = no of char,
+// 然后loop note去拿magazine的字, if magazine[char] < 0 or !magazine[char], return false
 const ransomNote2 = (note, magazine) => {
-    const magazineWords = magazine.split(" ");
+    const magazineWords = magazine.split("");
     const magazineHash = {};
 
     magazineWords.forEach(word => {
         if (!magazineHash[word]) magazineHash[word] = 0;
         magazineHash[word]++;
     });
-
     const noteWords = note.split(" ");
     let possible = true;
 
@@ -48,3 +49,4 @@ console.log(ransomNote("sit ad est sint", magazine));
 console.log(ransomNote("sit ed est sint", magazine));
 console.log(ransomNote("sit ad est sint in in", magazine));
 console.log(ransomNote("sit ad est sint in in in in", magazine));
+console.log(ransomNote2("aa", "aab"));

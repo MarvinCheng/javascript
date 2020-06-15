@@ -1,0 +1,87 @@
+@import "./variable.less";
+
+body {
+    font-family: 'karla', Fallback, sans-serif;
+    font-size: @unitFontSize;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: #EFEFEF;
+    font-weight: bold;
+    &:hover{
+        color: #ffc600;
+    }
+}
+
+h2 {
+    margin: 0px;
+}
+
+.menubar {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: (@unitPadding * 2) @unitPadding;
+    .nav {
+        float: right;
+        padding: (@unitPadding * 4);
+        .tab {
+            padding: 0px (@unitPadding * 4);
+
+        }
+    }
+
+
+}
+
+button {
+    margin: @unitPadding;
+    min-height: 50px;
+    min-width: 200px;
+    border-radius: 30px;
+    border: 0px;
+    font-size: (@unitFontSize - 4px);
+    cursor: pointer;
+    outline: none;
+    &.primary {
+        transition: max-height 0.3s;
+        background-color: mediumseagreen;
+        color: white;
+        &:hover {
+            background-color: mix(limegreen, mediumseagreen);
+        }
+    }
+    &.secondary {
+        color: black;
+        background-color: unset;
+        border: 2px solid black;
+        &:hover {
+            background-color: mix(lightpink, white);
+        }
+    }
+    &:hover {
+        font-size: (@unitFontSize - 3px);
+        min-height: 55px;
+        min-width: 220px;
+        margin: (@unitPadding - 5px) @unitPadding;
+        background-color: mix(limegreen, mediumseagreen);
+    }
+}
+
+section {
+    padding: 5vh 20vw 5vh 20vw;
+    text-align: center;
+    &.section1 {
+        min-height: 40vh;
+        background-color: lightpink;
+    }
+    > .mainText {
+        font-size: 4rem;
+        font-weight: bold;
+        font-family: sans-serif;
+    }
+
+
+}
+
+
