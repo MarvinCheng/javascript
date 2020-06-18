@@ -34,6 +34,10 @@ module.exports = {
 				],
 			},
 			{
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader'],
+			},
+			{
 			 	test: /\.(ttf|png|svg|jpg|gif)$/,
 				loader: 'file-loader',
 				options: {

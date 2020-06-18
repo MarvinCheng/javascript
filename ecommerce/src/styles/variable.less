@@ -3,6 +3,15 @@
   src: url("./font/Karla/Karla-Regular.ttf")  format('truetype'); /* Safari, Android, iOS */
 }
 
+@unitZero: 0px;
 @unitPadding: 5px;
 @unitBase: 12px;
 @unitFontSize: 18px;
+@unitMinHeight: 50px;
+@unitMinWidth: 200px;
+@unitBorderRadius: 30px;
+
+@breakPointTablet: ~"(min-width:" @unitBase * 55 ~")";
+@breakPointLaptop: ~"(min-width:" @unitBase * 75 ~")";
+@breakPointDesktop: ~"(min-width:" @unitBase * 110 ~")";
+@breakPointTall: ~"(min-height:" @unitBase * 80 ~")";
