@@ -170,3 +170,12 @@ class A extends B{
 }
 let inst = new A(1,2,3);
 inst.print();
+
+Number.prototype.add = function(n){
+    return this.valueOf() + n;
+};
+Number.prototype.minus = function(n){
+    return this.valueOf() - n;
+};
+
+(5).add(3).minus(2);

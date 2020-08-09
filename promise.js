@@ -80,35 +80,54 @@ v.then(val =>{
 });
 
 
-window.onload = function(){
+// window.onload = function(){
+//
+//     let pp = new Promise((resolve, reject) => {
+//         // let http = new XMLHttpRequest();
+//         // http.open("GET", 'test2.json');
+//         // http.send();
+//         // http.onload = function(){
+//         //     if(http.status==200){
+//         //         resolve(http.response);
+//         //     }else{
+//         //         reject(http.statusText);
+//         //     }
+//         // };
+//         fetch('test2.json').then(resp=>{
+//             if(resp.ok){
+//                 resolve(resp.json());
+//             } else{
+//                 reject(resp.statusText);
+//             }
+//
+//         });
+//     });
+//
+//     pp.then(resp=> {
+//         console.log(resp);
+//     }).catch(err=>{
+//         console.error(err);
+//     });
+//
+//
+// };
 
-    let pp = new Promise((resolve, reject) => {
-        // let http = new XMLHttpRequest();
-        // http.open("GET", 'test2.json');
-        // http.send();
-        // http.onload = function(){
-        //     if(http.status==200){
-        //         resolve(http.response);
-        //     }else{
-        //         reject(http.statusText);
-        //     }
-        // };
-        fetch('test2.json').then(resp=>{
-            if(resp.ok){
-                resolve(resp.json());
-            } else{
-                reject(resp.statusText);
+Promise.retry = function (promise, resolve1, reject1, max=2){
+    return new Promise((resolve, reject) => {
+        resolve1 = resolve1 || resolve;
+        reject1 = reject1 || reject;
+        promise().then((resolve1, err) => {
+            if(!max){
+                reject1(err);
             }
-
-        });
-    });
-
-    pp.then(resp=> {
-        console.log(resp);
-    }).catch(err=>{
-        console.error(err);
-    });
-
-
-};
-
+            this.retry(promise, resolve1, reject1, --max);
+        })
+    })
+}
+function getProm() {
+    const n = Math.random();
+    return new Promise((resolve, reject) => {
+        setTimeout(() =>  n > 0.5 ? resolve(n) : reject(n));
+    }, 1000);
+}
+Promise.retry(getProm);
